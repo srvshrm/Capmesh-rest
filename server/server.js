@@ -17,12 +17,12 @@ app.use(parser.json());
 
 /**
  * @description to insert post in database by a user
-*/
+ */
 app.patch('/rest/api/users/createPosts/update/:userName', async (req, res) => {
     let result;
     let userName = req.params.userName;
     try {
-        result = await post.createPosts(req.body,userName);
+        result = await post.createPosts(req.body, userName);
     }
     catch (err) {
         result = { err: err }
@@ -38,7 +38,7 @@ app.patch('/rest/api/users/editPosts/update/:userName/:postId', async (req, res)
     let userName = req.params.userName;
     let postId = req.params.postId;
     try {
-        result = await post.editPosts(req.body,userName,postId);
+        result = await post.editPosts(req.body, userName, postId);
     }
     catch (err) {
         result = { err: err }
@@ -54,7 +54,7 @@ app.patch('/rest/api/users/deletePosts/update/:userName/:postId', async (req, re
     let userName = req.params.userName;
     let postId = req.params.postId;
     try {
-        result = await post.deletePosts(userName,postId);
+        result = await post.deletePosts(userName, postId);
     }
     catch (err) {
         result = { err: err }
@@ -65,11 +65,24 @@ app.patch('/rest/api/users/deletePosts/update/:userName/:postId', async (req, re
 /**
  * @description to search people in the database by the user
  */
-app.patch('/rest/api/users/searchPeople/:userName', async (req, res) => {
+app.patch('/rest/api/users/searchPeople/', async (req, res) => {
     let result;
-    let userName = req.params.userName;
     try {
-        result = await search.searchPeople(userName);
+        result = await search.searchPeople(req.body.query);
+    }
+    catch (err) {
+        result = { err: err }
+    }
+    res.send(result)
+})
+
+/**
+ * @description to search companies in the database by the user
+ */
+app.patch('/rest/api/users/searchCompanies/', async (req, res) => {
+    let result;
+    try {
+        result = await search.searchCompanies(req.body.query);
     }
     catch (err) {
         result = { err: err }
